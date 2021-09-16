@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <a href="/articles"><button>Home</button></a>
+      <a href="/articles/new"><button>Add article</button></a>
+
+      <h1 class="h1">List of all the articles in the blog</h1>
+    </header>
+    <main>
+      <% if( articles.length){ articles.forEach((a)=>{ %>
+      <section>
+        <div>
+          <a class="title" href="/articles/<%= a.id %>"><%= a.title %></a>
+        </div>
+        <% })}else{ %>
+        <h3>No article present</h3>
+        <% } %>
+      </section>
+    </main>
+  </body>
+</html>
