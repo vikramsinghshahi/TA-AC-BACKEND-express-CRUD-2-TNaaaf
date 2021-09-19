@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h1 class="h1">This is the single article page</h1>
+      <a href="/articles"><button>Home</button></a>
+    </header>
+    <main>
+      <div>
+        <h2><%= data.title %></h2>
+        <p><%= data.description %></p>
+        <p><%= data.author %></p>
+        <% data.tags.forEach(t=>{ %>
+        <span><%= t%></span>
+        <% }) %>
+
+        <h3><%= data.likes ? data.likes : 0%></h3>
+        <a href="/articles/<%= data.id %>/likes"><button>likes</button></a>
+        <a href="/articles/<%= data.id %>/dislikes">
+          <button>Dislikes</button>
+        </a>
+      </div>
+      <div>
+        <a href="/articles/<%= data.id%>/edit"><button>Edit article</button></a>
+        <a href="/articles/<%= data.id %>/delete">
+          <button>Delte article</button>
+        </a>
+      </div>
+      <div>
+        <form action="/articles/<%= data.id %>/comments" method="POST">
+          <textarea name="content" placeholder="Add commnets"></textarea>
+          <input type="submit" value="Add commnet" />
+        </form>
+      </div>
+
+      <div>
+        <h4>Commnets</h4>
+        <% data.comments.forEach((c)=>{ %>
+        <h4><%= c.content%></h4>
+        <a href="/comments/<%= c.id%>/edit"><button>Edit-C</button></a>
+        <a href="/comments/<%= c.id%>/delete"><button>delete-C</button></a>
+        <% }) %>
+      </div>
+    </main>
+  </body>
+</html>
