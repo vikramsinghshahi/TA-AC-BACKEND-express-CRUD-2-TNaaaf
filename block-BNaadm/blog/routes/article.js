@@ -27,16 +27,27 @@ router.post('/', (req, res, next) => {
   });
 });
 
+// router.get('/:id', (req, res, next) => {
+//   var id = req.params.id;
+//   Article.findById(id, (err, data) => {
+//     console.log(data);
+//     if (err) return next(err);
+//     Comment.find({ articleId: id }, (err, comments) => {
+//       if (err) return next(err);
+//       res.render('articleDetails.ejs', { data, comments });
+//     });
+//   });
+// });
+
 router.get('/:id', (req, res, next) => {
   var id = req.params.id;
-  Article.findById(id, (err, data) => {
-    console.log(data);
-    if (err) return next(err);
-    Comment.find({ articleId: id }, (err, comments) => {
+  Article.findById(id)
+    .populate('comments')
+    .exec((err, data) => {
       if (err) return next(err);
-      res.render('articleDetails.ejs', { data, comments });
+      res.render('articleDetails.ejs', { data });
+      console.log(data);
     });
-  });
 });
 
 router.get('/:id/edit', (req, res, next) => {
@@ -61,7 +72,10 @@ router.get('/:id/delete', (req, res, next) => {
   var id = req.params.id;
   Article.findByIdAndDelete(id, (err, data) => {
     if (err) return next(err);
-    res.redirect('/articles');
+    Comment.deleteMany({ articleId: id }, (err, info) => {
+      if (err) return next(err);
+      res.redirect('/articles');
+    });
   });
 });
 
@@ -90,7 +104,16 @@ router.post('/:id/comments', (req, res, next) => {
   req.body.articleId = id;
   Comment.create(req.body, (err, comment) => {
     if (err) return next(err);
-    res.redirect('/articles/' + id);
+    Article.findByIdAndUpdate(
+      id,
+      { $push: { comments: comment._id } },
+      (err, updateArticle) => {
+        if (err) return next(err);
+        res.redirect('/articles/' + id);
+        console.log(updateArticle);
+      }
+    );
+
     // console.log(err, comment);
   });
 });

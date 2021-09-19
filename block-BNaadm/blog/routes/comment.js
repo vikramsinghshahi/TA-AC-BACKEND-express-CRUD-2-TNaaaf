@@ -1,4 +1,5 @@
 var express = require('express');
+const Article = require('../models/Article');
 
 var router = express.Router();
 
@@ -25,7 +26,14 @@ router.get('/:id/delete', (req, res, next) => {
   var id = req.params.id;
   Comment.findByIdAndDelete(id, (err, comment) => {
     if (err) return next(err);
-    res.redirect('/articles/' + comment.articleId);
+    Article.findByIdAndUpdate(
+      comment.articleId,
+      { $pull: { comments: id } },
+      (err, data) => {
+        if (err) return next(err);
+        res.redirect('/articles/' + comment.articleId);
+      }
+    );
   });
 });
 

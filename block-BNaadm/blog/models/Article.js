@@ -8,6 +8,7 @@ var articleSchema = new Schema(
     description: { type: String, required: true },
     tags: [String],
     author: String,
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     likes: { type: Number, default: 0 },
   },
   { timestamps: true }

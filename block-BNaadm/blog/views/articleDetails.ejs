@@ -42,7 +42,7 @@
 
       <div>
         <h4>Commnets</h4>
-        <% comments.forEach((c)=>{ %>
+        <% data.comments.forEach((c)=>{ %>
         <h4><%= c.content%></h4>
         <a href="/comments/<%= c.id%>/edit"><button>Edit-C</button></a>
         <a href="/comments/<%= c.id%>/delete"><button>delete-C</button></a>
