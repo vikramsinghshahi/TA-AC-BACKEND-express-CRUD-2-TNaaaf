@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=width , initial-scale=value " />
+    <title>Documnets</title>
+  </head>
+  <body>
+    <main>
+      <div>
+        <form action="/comments/<%= comment.id %>" method="POST">
+          <textarea name="content" placeholder="Add commnets">
+              <%= comment.content %>
+          </textarea>
+          <input type="submit" value="Update commnet" />
+        </form>
+      </div>
+    </main>
+  </body>
+</html>
